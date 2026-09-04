@@ -12,7 +12,7 @@ export default function Home() {
   });
   const [status, setStatus] = useState('');
 
-  const GOOGLE_SCRIPT_URL = 'https://ekim28-gulbanu-furkan-se7p.vercel.app';
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbweb7Pv_hkNL1qm-Bx9BfbtQ-Qbjg1uo2efa-tJYGFC-OHHohQBfIFI-Y4kSQlcjZQ-/exec';
   
   // İletişim için WhatsApp numaranız (Ülke kodu ile, örn: 905xxxxxxxxx)
   const WHATSAPP_NUMBER = '15148844131';
@@ -29,7 +29,7 @@ export default function Home() {
     };
 
     try {
-      await fetch("https://ekim28-gulbanu-furkan-se7p.vercel.app", {
+      await fetch("https://script.google.com/macros/s/AKfycbweb7Pv_hkNL1qm-Bx9BfbtQ-Qbjg1uo2efa-tJYGFC-OHHohQBfIFI-Y4kSQlcjZQ-/exec", {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
