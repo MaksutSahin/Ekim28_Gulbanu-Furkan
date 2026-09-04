@@ -88,7 +88,7 @@ export default function Home() {
           className="w-full h-auto block"
         />
 
-        <button
+        <button className="relative px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg shadow-lg animate-pulse ring-4 ring-rose-300 ring-offset-2 hover:animate-none"
           onClick={() => setIsOpen(true)}
           style={{
             position: 'absolute',
