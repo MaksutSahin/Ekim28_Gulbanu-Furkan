@@ -111,8 +111,8 @@ export default function Home() {
             left: '8%',
             top: '40%',
             fontSize: '28px',
-            zIndex: 20}}
-          >👉
+            zIndex: 20}}>
+          👉
         </span>
       </div>
 
