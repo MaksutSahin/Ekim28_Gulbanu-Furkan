@@ -65,14 +65,14 @@ export default function Home() {
         }
         .animate-sparkle { animation: sparkleSweep 1.2s ease-in-out 0.3s forwards; }
 
-        /* GÖRÜNMEYEN BUTON İÇİN YUMUŞAK PARLAMA VE YANIP SÖNME EFEKTİ */
+        /* BORDERSİZ YUMUŞAK PARLAMA VE YANIP SÖNME EFEKTİ */
         @keyframes softGlow {
           0%, 100% { 
             background-color: rgba(212, 175, 55, 0.15); 
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
           }
           50% { 
-            background-color: rgba(212, 175, 55, 0.4); 
+            background-color: rgba(212, 175, 55, 0.45); 
             box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
           }
         }
@@ -89,7 +89,7 @@ export default function Home() {
           className="w-full h-auto block"
         />
 
-        {/* DİKKAT ÇEKEN PARLAYAN GÖRÜNMEZ BUTON */}
+        {/* ÇERÇEVESİZ PARLAYAN GÖRÜNMEZ BUTON */}
         <button
           onClick={() => setIsOpen(true)}
           className="animate-soft-glow rounded-lg transition-all"
@@ -99,7 +99,8 @@ export default function Home() {
             top: '39.1%',
             width: '11.66%',
             height: '5.7%',
-            border: '2px solid rgba(255, 255, 255, 0.8)',
+            backgroundColor: 'transparent',
+            border: 'none',
             zIndex: 30,
             cursor: 'pointer'
           }}
