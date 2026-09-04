@@ -156,11 +156,14 @@ export default function Home() {
         </div>
 
         {/* 1. KISIM: DAVETİYE GÖRSELİ VE HAYALET BUTON */}
-        <div className="relative w-full max-w-md mx-auto overflow-hidden rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+        <div className="relative w-full max-w-md mx-auto overflow-hidden rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] bg-slate-800">
+          
+          {/* SEÇİLEN DİLE GÖRE DEĞİŞEN GÖRSEL (Dinamik src) */}
           <img
-            src="/davetiye-arkaplan.png"
-            alt="Davetiye"
-            className="w-full h-auto block"
+            key={lang} 
+            src={lang === 'tr' ? "/davetiye-arkaplan.png" : "/davetiye-arkaplan-en.png"}
+            alt={lang === 'tr' ? "Davetiye" : "Invitation"}
+            className="w-full h-auto block animate-in fade-in duration-700"
           />
 
           <button
