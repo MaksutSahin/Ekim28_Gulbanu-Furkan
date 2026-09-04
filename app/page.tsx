@@ -1,27 +1,79 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  // Dil state'i: Varsayılan olarak Türkçe başlar
+  const [lang, setLang] = useState<'tr' | 'en'>('tr');
   const [isOpen, setIsOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
+  // Dil sözlüğü
+  const t = {
+    tr: {
+      note: "Katılım teyidiniz (LCV) için lütfen davetiye üzerindeki butonu kullanınız. ✨",
+      contactLink: "Yanıtınızı değiştirmek, doğrulamak veya başka bir konu için buradan bize ulaşın.",
+      formTitle: "Kıymetli Misafirimiz,",
+      namePlaceholder: "Adınız ve soyadınız...",
+      attendanceLabel: "Katılım Durumunuz",
+      attendingYes: "Seve seve aranızda olacağız! ✨",
+      attendingNo: "Maalesef katılamayacağız, kalbimiz sizinle. 🕊️",
+      guestCountLabel: "Kişi Sayısı",
+      submitBtn: "Yanıtı İlet",
+      submitting: "Yanıtınız iletiliyor...",
+      success: "Teşekkür ederiz! Yanıtınız başarıyla alındı.",
+      error: "Bir hata oluştu, lütfen tekrar deneyin.",
+      contactTitle: "İletişim & Teyit",
+      contactDesc: "Yanıtınızı güncellemek, katılım durumunuzu doğrulamak veya sorularınız için doğrudan bizimle iletişime geçebilirsiniz.",
+      whatsappBtn: "WhatsApp İle İletişime Geç",
+      whatsappMsg: "Merhaba,%20davetiye%20yanıtımı%20güncellemek/doğrulamak%20istiyorum.",
+      address: "Rhoneweg 12-14, 1043 AH Amsterdam"
+    },
+    en: {
+      note: "Please use the button on the invitation to RSVP. ✨",
+      contactLink: "Contact us here to update your RSVP or for any other questions.",
+      formTitle: "Dear Guest,",
+      namePlaceholder: "Your first and last name...",
+      attendanceLabel: "Attendance Status",
+      attendingYes: "Joyfully accepts! ✨",
+      attendingNo: "Regretfully declines, our hearts are with you. 🕊️",
+      guestCountLabel: "Number of Guests",
+      submitBtn: "Submit RSVP",
+      submitting: "Submitting your response...",
+      success: "Thank you! Your response has been successfully received.",
+      error: "An error occurred, please try again.",
+      contactTitle: "Contact & Verification",
+      contactDesc: "You can reach out to us directly to update your response, verify details, or ask any questions.",
+      whatsappBtn: "Contact via WhatsApp",
+      whatsappMsg: "Hello,%20I%20would%20like%20to%20update/verify%20my%20RSVP.",
+      address: "Rhoneweg 12-14, 1043 AH Amsterdam"
+    }
+  };
+
   const [formData, setFormData] = useState({ 
     name: '', 
-    attending: 'Seve seve aranızda olacağız! ✨', 
+    attending: t.tr.attendingYes, 
     guests: '1' 
   });
   const [status, setStatus] = useState('');
 
+  // Dil değiştiğinde formdaki katılım seçeneğini yeni dile göre güncelle
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      attending: prev.attending === t.tr.attendingYes || prev.attending === t.en.attendingYes
+        ? t[lang].attendingYes 
+        : t[lang].attendingNo
+    }));
+  }, [lang]);
+
   const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMDlp2V7CmJsM9fBrSImZg271D1BMs33y-Z4oX-aqepjxxehlMTyFDLkTU-WM5vKPA/exec';
-  
-  // İletişim için WhatsApp numaranız (Ülke kodu ile, örn: 905xxxxxxxxx)
   const WHATSAPP_NUMBER = '15148844131';
 
-  const isAttending = formData.attending.includes('Seve seve');
+  const isAttending = formData.attending === t[lang].attendingYes;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('Yanıtınız iletiliyor...');
+    setStatus(t[lang].submitting);
 
     const finalData = {
       ...formData,
@@ -35,20 +87,38 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalData),
       });
-      setStatus('Teşekkür ederiz! Yanıtınız başarıyla alındı.');
+
+      setStatus(t[lang].success);
       setTimeout(() => {
         setIsOpen(false);
         setStatus('');
-        setFormData({ name: '', attending: 'Seve seve aranızda olacağız! ✨', guests: '1' });
+        setFormData({ name: '', attending: t[lang].attendingYes, guests: '1' });
       }, 2500);
     } catch (error) {
-      setStatus('Bir hata oluştu, lütfen tekrar deneyin.');
+      setStatus(t[lang].error);
     }
   };
 
   return (
-    <main className="min-h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-2 sm:p-4 py-8">
+    <main className="min-h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-2 sm:p-4 py-8 relative">
       
+      {/* DİL SEÇİCİ (SAĞ ÜST KÖŞE) */}
+      <div className="absolute top-6 right-6 flex items-center gap-3 z-40 elegant-font bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700/50 backdrop-blur-sm">
+        <button 
+          onClick={() => setLang('tr')} 
+          className={`text-lg transition-all ${lang === 'tr' ? 'text-[#C5A880] font-bold' : 'text-slate-400 hover:text-white'}`}
+        >
+          TR
+        </button>
+        <span className="text-slate-500/50">|</span>
+        <button 
+          onClick={() => setLang('en')} 
+          className={`text-lg transition-all ${lang === 'en' ? 'text-[#C5A880] font-bold' : 'text-slate-400 hover:text-white'}`}
+        >
+          EN
+        </button>
+      </div>
+
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
         .elegant-font { font-family: 'Cormorant Garamond', serif; }
@@ -65,7 +135,6 @@ export default function Home() {
         }
         .animate-sparkle { animation: sparkleSweep 1.2s ease-in-out 0.3s forwards; }
 
-        /* BORDERSİZ YUMUŞAK PARLAMA VE YANIP SÖNME EFEKTİ */
         @keyframes softGlow {
           0%, 100% { 
             background-color: rgba(212, 175, 55, 0.15); 
@@ -82,9 +151,9 @@ export default function Home() {
       `}} />
 
       {/* ÜST KISIM: ZARİF BİLGİLENDİRME NOTU */}
-      <div className="text-center elegant-font max-w-md px-4 mb-4">
+      <div className="text-center elegant-font max-w-md px-4 mb-4 mt-12 sm:mt-0">
         <p className="text-slate-300 text-lg italic tracking-wide">
-          Katılım teyidiniz (LCV) için lütfen davetiye üzerindeki RSVP butonunu kullanınız. ✨
+          {t[lang].note}
         </p>
       </div>
 
@@ -96,7 +165,6 @@ export default function Home() {
           className="w-full h-auto block"
         />
 
-        {/* ÇERÇEVESİZ PARLAYAN GÖRÜNMEZ BUTON */}
         <button
           onClick={() => setIsOpen(true)}
           className="animate-soft-glow rounded-lg transition-all"
@@ -111,18 +179,18 @@ export default function Home() {
             zIndex: 30,
             cursor: 'pointer'
           }}
-          title="LCV Formunu Aç"
-          aria-label="LCV Formunu Aç"
+          title={lang === 'tr' ? "LCV Formunu Aç" : "Open RSVP Form"}
+          aria-label={lang === 'tr' ? "LCV Formunu Aç" : "Open RSVP Form"}
         />
       </div>
 
-      {/* 2. KISIM: RESMİN ALTINDAKİ YALIN YAZI (Tıklanınca İrtibat Pop-up'ı Açılır) */}
+      {/* 2. KISIM: RESMİN ALTINDAKİ YALIN YAZI */}
       <div className="mt-6 text-center elegant-font max-w-md px-4">
         <p 
           onClick={() => setIsContactOpen(true)}
           className="text-slate-300 hover:text-white text-lg tracking-wide cursor-pointer underline underline-offset-4 decoration-[#C5A880]/60 hover:decoration-white transition-all italic"
         >
-          Katılım durumunuzu doğrulamak veya sorularınız için doğrudan bize ulaşabilirsiniz.
+          {t[lang].contactLink}
         </p>
       </div>
 
@@ -131,18 +199,14 @@ export default function Home() {
         <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity">
           
           <div className="relative w-full max-w-sm">
-
             <button
               onClick={() => setIsOpen(false)}
               className="absolute -top-4 -right-4 z-50 w-11 h-11 flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] text-white hover:from-[#B0936C] hover:to-[#89683F] font-bold text-lg border-2 border-[#FDFBF7] shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all transform hover:scale-110"
-              title="Kapat"
             >
               ✕
             </button>
 
-            <div 
-              className="w-full max-h-[95vh] relative flex flex-col overflow-hidden animate-rose-bloom elegant-font bg-[#FDFBF7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border-[5px] border-[#C5A880] rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl p-8 pt-10"
-            >
+            <div className="w-full max-h-[95vh] overflow-y-auto relative flex flex-col animate-rose-bloom elegant-font bg-[#FDFBF7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border-[5px] border-[#C5A880] rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl p-8 pt-10">
               
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-tl-[3rem] rounded-br-[3rem]">
                 <div className="absolute -inset-full top-0 block w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-sparkle" />
@@ -157,21 +221,20 @@ export default function Home() {
               </div>
 
               <div className="relative z-10 flex flex-col w-full h-full">
-                
                 <div className="text-center mb-6 pb-4 border-b border-[#C5A880]/30">
                   <p className="text-lg text-slate-700 italic tracking-wide">
-                    Rhoneweg 12-14, 1043 AH Amsterdam
+                    {t[lang].address}
                   </p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
                   
                   <div className="flex flex-col">
-                    <label className="block text-xl font-bold text-slate-800 mb-2 italic">Kıymetli Misafirimiz,</label>
+                    <label className="block text-xl font-bold text-slate-800 mb-2 italic">{t[lang].formTitle}</label>
                     <input 
                       type="text" 
                       required 
-                      placeholder="Adınız ve soyadınız..." 
+                      placeholder={t[lang].namePlaceholder}
                       className="w-full p-4 rounded-xl border-2 border-[#C5A880]/40 focus:outline-none focus:border-[#9E7B4F] focus:ring-2 focus:ring-[#9E7B4F]/20 text-slate-800 bg-white/95 backdrop-blur-sm text-lg transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.03)] placeholder:text-slate-400 placeholder:italic" 
                       value={formData.name} 
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
@@ -179,35 +242,30 @@ export default function Home() {
                   </div>
                   
                   <div className="flex flex-col">
-                    <label className="block text-xl font-bold text-slate-800 mb-2 italic">Katılım Durumunuz</label>
+                    <label className="block text-xl font-bold text-slate-800 mb-2 italic">{t[lang].attendanceLabel}</label>
                     <select 
                       className="w-full p-4 rounded-xl border-2 border-[#C5A880]/40 focus:outline-none focus:border-[#9E7B4F] focus:ring-2 focus:ring-[#9E7B4F]/20 text-slate-800 bg-white/95 backdrop-blur-sm text-[16px] transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.03)] cursor-pointer" 
                       value={formData.attending} 
                       onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
                     >
-                      <option value="Seve seve aranızda olacağız! ✨">Seve seve aranızda olacağız! ✨</option>
-                      <option value="Maalesef katılamayacağız, kalbimiz sizinle. 🕊️">Maalesef katılamayacağız, kalbimiz sizinle. 🕊️</option>
+                      <option value={t[lang].attendingYes}>{t[lang].attendingYes}</option>
+                      <option value={t[lang].attendingNo}>{t[lang].attendingNo}</option>
                     </select>
                   </div>
                   
                   {isAttending && (
                     <div className="flex flex-col items-center animate-in fade-in duration-300 pb-6">
-                      <label className="block text-xl font-bold text-slate-800 mb-2 italic text-center w-full">Kişi Sayısı</label>
+                      <label className="block text-xl font-bold text-slate-800 mb-2 italic text-center w-full">{t[lang].guestCountLabel}</label>
                       <select 
                         className="w-1/2 p-4 rounded-xl border-2 border-[#C5A880]/40 focus:outline-none focus:border-[#9E7B4F] focus:ring-2 focus:ring-[#9E7B4F]/20 text-slate-800 bg-white/95 backdrop-blur-sm text-lg text-center transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.03)] cursor-pointer"
                         value={formData.guests} 
                         onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
                       >
-                        <option value="1">1 Kişi</option>
-                        <option value="2">2 Kişi</option>
-                        <option value="3">3 Kişi</option>
-                        <option value="4">4 Kişi</option>
-                        <option value="5">5 Kişi</option>
-                        <option value="6">6 Kişi</option>
-                        <option value="7">7 Kişi</option>
-                        <option value="8">8 Kişi</option>
-                        <option value="9">9 Kişi</option>
-                        <option value="10">10 Kişi</option>
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                          <option key={num} value={num}>
+                            {num} {lang === 'tr' ? 'Kişi' : (num === 1 ? 'Guest' : 'Guests')}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   )}
@@ -217,7 +275,7 @@ export default function Home() {
                       type="submit" 
                       className="w-1/2 min-w-[160px] bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] hover:from-[#B0936C] hover:to-[#89683F] text-white text-xl font-bold tracking-wider py-3.5 px-6 rounded-2xl border-[2.5px] border-[#FDFBF7]/60 shadow-[0_8px_20px_-4px_rgba(157,123,79,0.4)] transition-all duration-300 transform hover:-translate-y-1"
                     >
-                      Yanıtı İlet
+                      {t[lang].submitBtn}
                     </button>
                   </div>
 
@@ -226,30 +284,24 @@ export default function Home() {
                   )}
                 </form>
               </div>
-              
             </div>
           </div>
-
         </div>
       )}
 
-      {/* 4. KISIM: İRTİBAT & DÜZELTME POP-UP (Tamamen aynı tasarımsal dilde) */}
+      {/* 4. KISIM: İRTİBAT & DÜZELTME POP-UP */}
       {isContactOpen && (
         <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity">
           
           <div className="relative w-full max-w-sm">
-
             <button
               onClick={() => setIsContactOpen(false)}
               className="absolute -top-4 -right-4 z-50 w-11 h-11 flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] text-white hover:from-[#B0936C] hover:to-[#89683F] font-bold text-lg border-2 border-[#FDFBF7] shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all transform hover:scale-110"
-              title="Kapat"
             >
               ✕
             </button>
 
-            <div 
-              className="w-full relative flex flex-col overflow-hidden animate-rose-bloom elegant-font bg-[#FDFBF7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border-[5px] border-[#C5A880] rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl p-8 pt-10"
-            >
+            <div className="w-full relative flex flex-col overflow-hidden animate-rose-bloom elegant-font bg-[#FDFBF7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border-[5px] border-[#C5A880] rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl p-8 pt-10">
               
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-tl-[3rem] rounded-br-[3rem]">
                 <div className="absolute -inset-full top-0 block w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-sparkle" />
@@ -264,31 +316,26 @@ export default function Home() {
               </div>
 
               <div className="relative z-10 flex flex-col w-full text-center space-y-6">
-                
                 <h3 className="text-2xl font-bold text-slate-800 italic pb-3 border-b border-[#C5A880]/30">
-                  İletişim & Teyit
+                  {t[lang].contactTitle}
                 </h3>
-
                 <p className="text-lg text-slate-700 italic leading-relaxed">
-                  Yanıtınızı güncellemek, katılım durumunuzu doğrulamak veya sorularınız için doğrudan bizimle iletişime geçebilirsiniz.
+                  {t[lang].contactDesc}
                 </p>
-
                 <div className="pt-2 flex justify-center">
                   <a 
-                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=Merhaba,%20davetiye%20yanıtımı%20güncellemek/doğrulamak%20istiyorum.`}
+                    href={`https://wa.me/${WHATSAPP_NUMBER}?text=${t[lang].whatsappMsg}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-full bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] hover:from-[#B0936C] hover:to-[#89683F] text-white text-lg font-bold tracking-wider py-3.5 px-6 rounded-2xl border-[2.5px] border-[#FDFBF7]/60 shadow-[0_8px_20px_-4px_rgba(157,123,79,0.4)] transition-all duration-300 transform hover:-translate-y-1"
                   >
-                    WhatsApp İle İletişime Geç
+                    {t[lang].whatsappBtn}
                   </a>
                 </div>
-
               </div>
 
             </div>
           </div>
-
         </div>
       )}
 
