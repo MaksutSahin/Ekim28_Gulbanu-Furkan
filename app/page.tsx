@@ -54,38 +54,30 @@ export default function Home() {
         .elegant-font { font-family: 'Cormorant Garamond', serif; }
 
         @keyframes roseBloom {
-          0% {
-            opacity: 0;
-            transform: scale(0.85) rotate(-2deg);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-          }
+          0% { opacity: 0; transform: scale(0.85) rotate(-2deg); }
+          100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
-        .animate-rose-bloom {
-          animation: roseBloom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        .animate-rose-bloom { animation: roseBloom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         @keyframes sparkleSweep {
-          0% {
-            transform: translateX(-100%) rotate(25deg);
-          }
-          100% {
-            transform: translateX(200%) rotate(25deg);
-          }
+          0% { transform: translateX(-100%) rotate(25deg); }
+          100% { transform: translateX(200%) rotate(25deg); }
         }
-        .animate-sparkle {
-          animation: sparkleSweep 1.2s ease-in-out 0.3s forwards;
-        }
+        .animate-sparkle { animation: sparkleSweep 1.2s ease-in-out 0.3s forwards; }
 
-        /* YENİ EKLENEN: Sağa-Sola Zıplama Animasyonu */
-        @keyframes pointX {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(12px); } /* Parmağın ne kadar sağa gideceği */
+        /* GÖRÜNMEYEN BUTON İÇİN YUMUŞAK PARLAMA VE YANIP SÖNME EFEKTİ */
+        @keyframes softGlow {
+          0%, 100% { 
+            background-color: rgba(212, 175, 55, 0.15); 
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+          }
+          50% { 
+            background-color: rgba(212, 175, 55, 0.4); 
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+          }
         }
-        .animate-point-x {
-          animation: pointX 1s infinite ease-in-out;
+        .animate-soft-glow {
+          animation: softGlow 2s infinite ease-in-out;
         }
       `}} />
 
@@ -97,38 +89,23 @@ export default function Home() {
           className="w-full h-auto block"
         />
 
-        {/* Orijinal Butonunuz (Hiç Dokunulmadı) */}
+        {/* DİKKAT ÇEKEN PARLAYAN GÖRÜNMEZ BUTON */}
         <button
           onClick={() => setIsOpen(true)}
+          className="animate-soft-glow rounded-lg transition-all"
           style={{
             position: 'absolute',
             left: '11.5%',
             top: '39.1%',
             width: '11.66%',
             height: '5.7%',
-            backgroundColor: 'transparent',
-            border: 'none',
-            zIndex: 20,
+            border: '2px solid rgba(255, 255, 255, 0.8)',
+            zIndex: 30,
             cursor: 'pointer'
           }}
           title="LCV Formunu Aç"
           aria-label="LCV Formunu Aç"
         />
-
-        {/* YATAYDA HAREKET EDEN YENİ PARMAK İŞARETİ */}
-        <span 
-          className="animate-point-x pointer-events-none select-none drop-shadow-md"
-          style={{
-            position: 'absolute',
-            left: '5%',
-            top: '39.5%',
-            fontSize: '26px',
-            zIndex: 20
-          }}
-          aria-hidden="true"
-        >
-          👉
-        </span>
       </div>
 
       {/* 2. KISIM: RESMİN ALTINDAKİ YALIN YAZI (Tıklanınca İrtibat Pop-up'ı Açılır) */}
