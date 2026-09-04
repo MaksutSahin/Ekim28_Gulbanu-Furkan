@@ -8,7 +8,7 @@ export default function Home() {
 
   const t = {
     tr: {
-      note: "Katılım için lütfen davetiye üzerinde sol taraftaki [ R S V P ] butonu kullanınız. ✨",
+      note: "Katılım için lütfen davetiye üzerinde sol taraftaki [ R S V P ] butonu kullanınız.",
       contactLink: "Yanıtınızı değiştirmek, doğrulamak veya başka bir konu için buradan bize ulaşın.",
       formTitle: "Kıymetli Misafirimiz,",
       namePlaceholder: "Adınız ve soyadınız...",
