@@ -9,7 +9,7 @@ export default function Home() {
   const t = {
     tr: {
       note: "Katılım için lütfen davetiye üzerinde sol taraftaki [ R S V P ] butonu kullanınız.",
-      contactLink: "Sorularınız, katılım durumunuzu doğrulamak için buradan bize ulaşabilirsiniz.",
+      contactLink: "Sorularınız veya katılım durumunuzu doğrulamak için buradan bize ulaşabilirsiniz.",
       formTitle: "Kıymetli Misafirimiz,",
       namePlaceholder: "Adınız ve soyadınız...",
       attendanceLabel: "Katılım Durumunuz",
