@@ -104,6 +104,16 @@ export default function Home() {
           title="LCV Formunu Aç"
           aria-label="LCV Formunu Aç"
         />
+        <span
+          className="animate-bounce pointer-events-none select-none"
+          style={{
+            position: 'absolute',
+            left: '8%',
+            top: '40%',
+            fontSize: '28px',
+            zIndex: 20}}
+          >👉
+        </span>
       </div>
 
       {/* 2. KISIM: RESMİN ALTINDAKİ YALIN YAZI (Tıklanınca İrtibat Pop-up'ı Açılır) */}
