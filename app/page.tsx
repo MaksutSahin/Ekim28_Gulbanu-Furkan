@@ -115,7 +115,7 @@ export default function Home() {
           onClick={() => setIsContactOpen(true)}
           className="text-slate-300 hover:text-white text-lg tracking-wide cursor-pointer underline underline-offset-4 decoration-[#C5A880]/60 hover:decoration-white transition-all italic"
         >
-          Yanıtınızı değiştirmek, doğrulamak veya başka bir konu için buradan bize ulaşın.
+          Katılım durumunuzu doğrulamak veya sorularınız için doğrudan bize ulaşabilirsiniz.
         </p>
       </div>
 
