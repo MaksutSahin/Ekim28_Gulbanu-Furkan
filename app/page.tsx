@@ -12,7 +12,7 @@ export default function Home() {
   });
   const [status, setStatus] = useState('');
 
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbweb7Pv_hkNL1qm-Bx9BfbtQ-Qbjg1uo2efa-tJYGFC-OHHohQBfIFI-Y4kSQlcjZQ-/exec';
+  const GOOGLE_SCRIPT_URL = 'BURAYA_GOOGLE_APPS_SCRIPT_URL_YAPIŞTIRIN';
   
   // İletişim için WhatsApp numaranız (Ülke kodu ile, örn: 905xxxxxxxxx)
   const WHATSAPP_NUMBER = '15148844131';
@@ -29,7 +29,7 @@ export default function Home() {
     };
 
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbweb7Pv_hkNL1qm-Bx9BfbtQ-Qbjg1uo2efa-tJYGFC-OHHohQBfIFI-Y4kSQlcjZQ-/exec", {
+      await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
@@ -78,6 +78,15 @@ export default function Home() {
         .animate-sparkle {
           animation: sparkleSweep 1.2s ease-in-out 0.3s forwards;
         }
+
+        /* YENİ EKLENEN: Sağa-Sola Zıplama Animasyonu */
+        @keyframes pointX {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(12px); } /* Parmağın ne kadar sağa gideceği */
+        }
+        .animate-point-x {
+          animation: pointX 1s infinite ease-in-out;
+        }
       `}} />
 
       {/* 1. KISIM: DAVETİYE GÖRSELİ VE HAYALET BUTON */}
@@ -88,6 +97,7 @@ export default function Home() {
           className="w-full h-auto block"
         />
 
+        {/* Orijinal Butonunuz (Hiç Dokunulmadı) */}
         <button
           onClick={() => setIsOpen(true)}
           style={{
@@ -104,14 +114,19 @@ export default function Home() {
           title="LCV Formunu Aç"
           aria-label="LCV Formunu Aç"
         />
-        <span
-          className="animate-bounce pointer-events-none select-none"
+
+        {/* YATAYDA HAREKET EDEN YENİ PARMAK İŞARETİ */}
+        <span 
+          className="animate-point-x pointer-events-none select-none drop-shadow-md"
           style={{
             position: 'absolute',
-            left: '8%',
-            top: '40%',
-            fontSize: '28px',
-            zIndex: 20}}>
+            left: '5%',
+            top: '39.5%',
+            fontSize: '26px',
+            zIndex: 20
+          }}
+          aria-hidden="true"
+        >
           👉
         </span>
       </div>
