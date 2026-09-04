@@ -56,7 +56,6 @@ export default function Home() {
   });
   const [status, setStatus] = useState('');
 
-  // Dil değiştiğinde formdaki katılım seçeneğini yeni dile göre güncelle
   useEffect(() => {
     setFormData(prev => ({
       ...prev,
@@ -66,7 +65,7 @@ export default function Home() {
     }));
   }, [lang]);
 
-  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMDlp2V7CmJsM9fBrSImZg271D1BMs33y-Z4oX-aqepjxxehlMTyFDLkTU-WM5vKPA/exec';
+  const GOOGLE_SCRIPT_URL = '[https://script.google.com/macros/s/AKfycbxMDlp2V7CmJsM9fBrSImZg271D1BMs33y-Z4oX-aqepjxxehlMTyFDLkTU-WM5vKPA/exec](https://script.google.com/macros/s/AKfycbxMDlp2V7CmJsM9fBrSImZg271D1BMs33y-Z4oX-aqepjxxehlMTyFDLkTU-WM5vKPA/exec)';
   const WHATSAPP_NUMBER = '15148844131';
 
   const isAttending = formData.attending === t[lang].attendingYes;
@@ -102,25 +101,25 @@ export default function Home() {
   return (
     <main className="min-h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-2 sm:p-4 py-8 relative">
       
-      {/* DİL SEÇİCİ (SAĞ ÜST KÖŞE) */}
-      <div className="absolute top-5 right-4 sm:top-8 sm:right-8 flex items-center justify-center gap-3 sm:gap-4 z-40 elegant-font bg-slate-400/10 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full border border-slate-300/20 backdrop-blur-md whitespace-nowrap shadow-[0_4px_15px_rgba(0,0,0,0.15)]">
+      {/* DİL SEÇİCİ (SAĞ ÜST KÖŞE - YENİ TASARIM) */}
+      <div className="fixed top-6 right-6 sm:top-8 sm:right-8 flex items-center justify-center gap-3 sm:gap-4 z-50 elegant-font bg-black/40 px-6 py-3 sm:px-8 sm:py-3.5 rounded-full border border-white/40 backdrop-blur-md whitespace-nowrap shadow-xl">
         <button 
           onClick={() => setLang('tr')} 
-          className={`text-xl sm:text-2xl transition-all duration-300 ${lang === 'tr' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-300/80 hover:text-white hover:scale-105'}`}
+          className={`text-xl sm:text-2xl transition-all duration-300 ${lang === 'tr' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-200 hover:text-white hover:scale-105'}`}
         >
           TR
         </button>
-        <span className="text-slate-400/30 text-xl sm:text-2xl font-light">|</span>
+        <span className="text-white/30 text-xl sm:text-2xl font-light">|</span>
         <button 
           onClick={() => setLang('en')} 
-          className={`text-xl sm:text-2xl transition-all duration-300 ${lang === 'en' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-300/80 hover:text-white hover:scale-105'}`}
+          className={`text-xl sm:text-2xl transition-all duration-300 ${lang === 'en' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-200 hover:text-white hover:scale-105'}`}
         >
           EN
         </button>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+        @import url('[https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap](https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap)');
         .elegant-font { font-family: 'Cormorant Garamond', serif; }
 
         @keyframes roseBloom {
@@ -194,6 +193,151 @@ export default function Home() {
         </p>
       </div>
 
-      {/* 3. KISIM: LCV FORM POP-UP */}**HTML**
-```html
-<button class="dil-secenek-btn">🌐 Türkçe</button>
+      {/* 3. KISIM: LCV FORM POP-UP */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity">
+          
+          <div className="relative w-full max-w-sm">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute -top-4 -right-4 z-50 w-11 h-11 flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] text-white hover:from-[#B0936C] hover:to-[#89683F] font-bold text-lg border-2 border-[#FDFBF7] shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all transform hover:scale-110"
+            >
+              ✕
+            </button>
+
+            <div className="w-full max-h-[95vh] overflow-y-auto relative flex flex-col animate-rose-bloom elegant-font bg-[#FDFBF7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border-[5px] border-[#C5A880] rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl p-8 pt-10">
+              
+              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-tl-[3rem] rounded-br-[3rem]">
+                <div className="absolute -inset-full top-0 block w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-sparkle" />
+              </div>
+
+              <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+                <img 
+                  src="[https://www.svgrepo.com/show/308892/rose-flower-nature-floral.svg](https://www.svgrepo.com/show/308892/rose-flower-nature-floral.svg)" 
+                  alt="Rose Background" 
+                  className="w-full h-auto opacity-[0.04] rotate-12 scale-125 mix-blend-multiply"
+                />
+              </div>
+
+              <div className="relative z-10 flex flex-col w-full h-full">
+                <div className="text-center mb-6 pb-4 border-b border-[#C5A880]/30">
+                  <p className="text-lg text-slate-700 italic tracking-wide">
+                    {t[lang].address}
+                  </p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
+                  
+                  <div className="flex flex-col">
+                    <label className="block text-xl font-bold text-slate-800 mb-2 italic">{t[lang].formTitle}</label>
+                    <input 
+                      type="text" 
+                      required 
+                      placeholder={t[lang].namePlaceholder}
+                      className="w-full p-4 rounded-xl border-2 border-[#C5A880]/40 focus:outline-none focus:border-[#9E7B4F] focus:ring-2 focus:ring-[#9E7B4F]/20 text-slate-800 bg-white/95 backdrop-blur-sm text-lg transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.03)] placeholder:text-slate-400 placeholder:italic" 
+                      value={formData.name} 
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })} 
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col">
+                    <label className="block text-xl font-bold text-slate-800 mb-2 italic">{t[lang].attendanceLabel}</label>
+                    <select 
+                      className="w-full p-4 rounded-xl border-2 border-[#C5A880]/40 focus:outline-none focus:border-[#9E7B4F] focus:ring-2 focus:ring-[#9E7B4F]/20 text-slate-800 bg-white/95 backdrop-blur-sm text-[16px] transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.03)] cursor-pointer" 
+                      value={formData.attending} 
+                      onChange={(e) => setFormData({ ...formData, attending: e.target.value })}
+                    >
+                      <option value={t[lang].attendingYes}>{t[lang].attendingYes}</option>
+                      <option value={t[lang].attendingNo}>{t[lang].attendingNo}</option>
+                    </select>
+                  </div>
+                  
+                  {isAttending && (
+                    <div className="flex flex-col items-center animate-in fade-in duration-300 pb-6">
+                      <label className="block text-xl font-bold text-slate-800 mb-2 italic text-center w-full">{t[lang].guestCountLabel}</label>
+                      <select 
+                        className="w-1/2 p-4 rounded-xl border-2 border-[#C5A880]/40 focus:outline-none focus:border-[#9E7B4F] focus:ring-2 focus:ring-[#9E7B4F]/20 text-slate-800 bg-white/95 backdrop-blur-sm text-lg text-center transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.03)] cursor-pointer"
+                        value={formData.guests} 
+                        onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
+                      >
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                          <option key={num} value={num}>
+                            {num} {lang === 'tr' ? 'Kişi' : (num === 1 ? 'Guest' : 'Guests')}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  <div className="pt-2 flex justify-center">
+                    <button 
+                      type="submit" 
+                      className="w-1/2 min-w-[160px] bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] hover:from-[#B0936C] hover:to-[#89683F] text-white text-xl font-bold tracking-wider py-3.5 px-6 rounded-2xl border-[2.5px] border-[#FDFBF7]/60 shadow-[0_8px_20px_-4px_rgba(157,123,79,0.4)] transition-all duration-300 transform hover:-translate-y-1"
+                    >
+                      {t[lang].submitBtn}
+                    </button>
+                  </div>
+
+                  {status && (
+                    <p className="text-center text-lg font-bold text-slate-700 mt-2 italic">{status}</p>
+                  )}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 4. KISIM: İRTİBAT & DÜZELTME POP-UP */}
+      {isContactOpen && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity">
+          
+          <div className="relative w-full max-w-sm">
+            <button
+              onClick={() => setIsContactOpen(false)}
+              className="absolute -top-4 -right-4 z-50 w-11 h-11 flex items-center justify-center rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] text-white hover:from-[#B0936C] hover:to-[#89683F] font-bold text-lg border-2 border-[#FDFBF7] shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all transform hover:scale-110"
+            >
+              ✕
+            </button>
+
+            <div className="w-full relative flex flex-col overflow-hidden animate-rose-bloom elegant-font bg-[#FDFBF7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border-[5px] border-[#C5A880] rounded-tl-[3rem] rounded-br-[3rem] rounded-tr-xl rounded-bl-xl p-8 pt-10">
+              
+              <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-tl-[3rem] rounded-br-[3rem]">
+                <div className="absolute -inset-full top-0 block w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-sparkle" />
+              </div>
+
+              <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-hidden">
+                <img 
+                  src="[https://www.svgrepo.com/show/308892/rose-flower-nature-floral.svg](https://www.svgrepo.com/show/308892/rose-flower-nature-floral.svg)" 
+                  alt="Rose Background" 
+                  className="w-full h-auto opacity-[0.04] rotate-12 scale-125 mix-blend-multiply"
+                />
+              </div>
+
+              <div className="relative z-10 flex flex-col w-full text-center space-y-6">
+                <h3 className="text-2xl font-bold text-slate-800 italic pb-3 border-b border-[#C5A880]/30">
+                  {t[lang].contactTitle}
+                </h3>
+                <p className="text-lg text-slate-700 italic leading-relaxed">
+                  {t[lang].contactDesc}
+                </p>
+                <div className="pt-2 flex justify-center">
+                  <a 
+                    href={`[https://wa.me/$](https://wa.me/$){WHATSAPP_NUMBER}?text=${t[lang].whatsappMsg}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] hover:from-[#B0936C] hover:to-[#89683F] text-white text-lg font-bold tracking-wider py-3.5 px-6 rounded-2xl border-[2.5px] border-[#FDFBF7]/60 shadow-[0_8px_20px_-4px_rgba(157,123,79,0.4)] transition-all duration-300 transform hover:-translate-y-1"
+                  >
+                    {t[lang].whatsappBtn}
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+    </main>
+  );
+}
