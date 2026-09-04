@@ -130,7 +130,7 @@ export default function Home() {
       `}} />
 
       {/* DİL SEÇİCİ - ORTALAMA KUTUSUNDAN TAMAMEN BAĞIMSIZ - KESİN SAĞ ÜST KÖŞE */}
-      <div className="fixed top-4 right-4 sm:top-8 sm:right-8 flex items-center justify-center gap-3 sm:gap-4 z-[100] elegant-font bg-black/40 px-6 py-2.5 sm:px-8 sm:py-3.5 rounded-full border border-white/40 backdrop-blur-md whitespace-nowrap shadow-xl">
+      <div>
         <button 
           onClick={() => setLang('tr')} 
           className={`text-lg sm:text-2xl transition-all duration-300 ${lang === 'tr' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-200 hover:text-white hover:scale-105'}`}
