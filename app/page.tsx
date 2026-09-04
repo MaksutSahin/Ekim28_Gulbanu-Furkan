@@ -88,23 +88,31 @@ export default function Home() {
           className="w-full h-auto block"
         />
 
-        <button className="relative px-6 py-3 bg-rose-500 text-white font-semibold rounded-lg shadow-lg animate-pulse ring-4 ring-rose-300 ring-offset-2 hover:animate-none"
-          onClick={() => setIsOpen(true)}
-          style={{
-            position: 'absolute',
-            left: '11.5%',
-            top: '39.1%',
-            width: '11.66%',
-            height: '5.7%',
-            backgroundColor: 'transparent',
-            border: 'none',
-            zIndex: 20,
-            cursor: 'pointer'
-          }}
-          title="LCV Formunu Aç"
-          aria-label="LCV Formunu Aç"
-        />
-      </div>
+        <button
+  onClick={() => setIsOpen(true)}
+  className="relative flex items-center justify-center"
+  style={{
+    position: 'absolute',
+    left: '11.5%',
+    top: '39.1%',
+    width: '11.66%',
+    height: '5.7%',
+    backgroundColor: 'transparent',
+    border: 'none',
+    zIndex: 20,
+    cursor: 'pointer'
+  }}
+  title="LCV Formunu Aç"
+  aria-label="LCV Formunu Aç"
+>
+  {/* Butonun solunda durup görünmez alana (sağa) doğru zıplayan el */}
+  <span 
+    className="absolute -left-8 top-1/2 -translate-y-1/2 text-2xl animate-bounce pointer-events-none select-none drop-shadow-md"
+    aria-hidden="true"
+  >
+    👉
+  </span>
+</button>
 
       {/* 2. KISIM: RESMİN ALTINDAKİ YALIN YAZI (Tıklanınca İrtibat Pop-up'ı Açılır) */}
       <div className="mt-6 text-center elegant-font max-w-md px-4">
