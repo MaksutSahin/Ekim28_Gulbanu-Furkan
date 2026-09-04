@@ -90,7 +90,7 @@ export default function Home() {
 
         <button
   onClick={() => setIsOpen(true)}
-  className="relative flex items-center justify-center"
+  className="group relative flex items-center justify-center"
   style={{
     position: 'absolute',
     left: '11.5%',
@@ -105,12 +105,18 @@ export default function Home() {
   title="LCV Formunu Aç"
   aria-label="LCV Formunu Aç"
 >
-  {/* Butonun solunda durup görünmez alana (sağa) doğru zıplayan el */}
+  {/* Yavaşça yanıp sönen belirgin ışık çerçevesi */}
+  <span className="absolute inset-0 rounded-md border-2 border-rose-500/70 animate-pulse pointer-events-none" />
+  
+  {/* Genişleyen dikkat çekici dış hüzme */}
+  <span className="absolute inset-0 rounded-md border border-rose-400 animate-ping opacity-40 pointer-events-none" />
+
+  {/* Butonun sağ tarafında durup butona doğru zıplayan işaret parmağı */}
   <span 
-    className="absolute -left-8 top-1/2 -translate-y-1/2 text-2xl animate-bounce pointer-events-none select-none drop-shadow-md"
+    className="absolute -right-8 top-1/2 -translate-y-1/2 text-2xl animate-bounce pointer-events-none select-none drop-shadow-md"
     aria-hidden="true"
   >
-    👉
+    👈
   </span>
 </button>
 
