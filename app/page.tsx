@@ -81,6 +81,13 @@ export default function Home() {
         }
       `}} />
 
+      {/* ÜST KISIM: ZARİF BİLGİLENDİRME NOTU */}
+      <div className="text-center elegant-font max-w-md px-4 mb-4">
+        <p className="text-slate-300 text-lg italic tracking-wide">
+          Katılım teyidiniz (LCV) için lütfen davetiye üzerindeki RSVP butonunu kullanınız. ✨
+        </p>
+      </div>
+
       {/* 1. KISIM: DAVETİYE GÖRSELİ VE HAYALET BUTON */}
       <div className="relative w-full max-w-md mx-auto overflow-hidden rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)]">
         <img
