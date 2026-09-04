@@ -27,7 +27,7 @@ export default function Home() {
       address: "Rhoneweg 12-14, 1043 AH Amsterdam"
     },
     en: {
-      note: "Please use the button on the invitation to RSVP. ✨",
+      note: "Please use the button on the invitation to RSVP.",
       contactLink: "Contact us here to update your RSVP or for any other questions.",
       formTitle: "Dear Guest,",
       namePlaceholder: "Your first and last name...",
