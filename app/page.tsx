@@ -12,7 +12,7 @@ export default function Home() {
   });
   const [status, setStatus] = useState('');
 
-  const GOOGLE_SCRIPT_URL = 'BURAYA_GOOGLE_APPS_SCRIPT_URL_YAPIŞTIRIN';
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMDlp2V7CmJsM9fBrSImZg271D1BMs33y-Z4oX-aqepjxxehlMTyFDLkTU-WM5vKPA/exec';
   
   // İletişim için WhatsApp numaranız (Ülke kodu ile, örn: 905xxxxxxxxx)
   const WHATSAPP_NUMBER = '15148844131';
