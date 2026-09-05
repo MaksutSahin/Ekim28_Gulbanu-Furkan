@@ -8,8 +8,8 @@ export default function Home() {
 
   const t = {
     tr: {
-      noteStart: "Katılım için lütfen davetiyenin sol tarafındaki ",
-      noteButton: "DAVETİ YANITLA", // Köşeli parantezler kaldırıldı, çünkü artık gerçek bir buton
+      noteStart: "Katılım için lütfen buradaki veya davetiyenin sol tarafındaki ",
+      noteButton: "RSVP", // Köşeli parantezler kaldırıldı, çünkü artık gerçek bir buton
       noteEnd: " butonunu kullanınız.",
       contactLink: "Sorularınız veya katılım durumunuzu doğrulamak için buradan bize ulaşabilirsiniz.",
       formTitle: "Kıymetli Misafirimiz,",
