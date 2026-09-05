@@ -2,13 +2,15 @@
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [lang, setLang] = useState<'tr' | 'en'>('tr');
+  const [lang, setLang] = useState<'tr' | 'en' | 'nl'>('tr');
   const [isOpen, setIsOpen] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
 
   const t = {
     tr: {
-      note: "Katılım için lütfen davetiye üzerinde sol taraftaki [ R S V P ] butonu kullanınız.",
+      noteStart: "Katılım için lütfen davetiyenin sol tarafındaki ",
+      noteButton: "DAVETİ YANITLA", // Köşeli parantezler kaldırıldı, çünkü artık gerçek bir buton
+      noteEnd: " butonunu kullanınız.",
       contactLink: "Sorularınız veya katılım durumunuzu doğrulamak için buradan bize ulaşabilirsiniz.",
       formTitle: "Kıymetli Misafirimiz,",
       namePlaceholder: "Adınız ve soyadınız...",
@@ -27,7 +29,9 @@ export default function Home() {
       address: "Rhoneweg 12-14, 1043 AH Amsterdam"
     },
     en: {
-      note: "Please use the button on the invitation to RSVP.",
+      noteStart: "Please use the ",
+      noteButton: "RSVP",
+      noteEnd: " button on the left side of the invitation.",
       contactLink: "Contact us here to update your RSVP or for any other questions.",
       formTitle: "Dear Guest,",
       namePlaceholder: "Your first and last name...",
@@ -44,6 +48,27 @@ export default function Home() {
       whatsappBtn: "Contact via WhatsApp",
       whatsappMsg: "Hello,%20I%20would%20like%20to%20update/verify%20my%20RSVP.",
       address: "Rhoneweg 12-14, 1043 AH Amsterdam"
+    },
+    nl: {
+      noteStart: "Gebruik alstublieft de ",
+      noteButton: "RSVP",
+      noteEnd: " knop aan de linkerkant van de uitnodiging.",
+      contactLink: "Neem hier contact met ons op om uw antwoord bij te werken of voor vragen.",
+      formTitle: "Beste Gast,",
+      namePlaceholder: "Uw voor- en achternaam...",
+      attendanceLabel: "Aanwezigheidsstatus",
+      attendingYes: "Wij zijn er graag bij! ✨",
+      attendingNo: "Helaas kunnen we niet komen, onze harten zijn bij jullie. 🕊️",
+      guestCountLabel: "Aantal Gasten",
+      submitBtn: "Reactie Verzenden",
+      submitting: "Uw reactie wordt verzonden...",
+      success: "Dank u! Uw reactie is succesvol ontvangen.",
+      error: "Er is een fout opgetreden, probeer het opnieuw.",
+      contactTitle: "Contact & Verificatie",
+      contactDesc: "U kunt rechtstreeks contact met ons opnemen om uw reactie bij te werken, details te verifiëren of vragen te stellen.",
+      whatsappBtn: "Contact via WhatsApp",
+      whatsappMsg: "Hallo,%20ik%20wil%20graag%20mijn%20RSVP%20bijwerken/verifiëren.",
+      address: "Rhoneweg 12-14, 1043 AH Amsterdam"
     }
   };
 
@@ -57,9 +82,12 @@ export default function Home() {
   useEffect(() => {
     setFormData(prev => ({
       ...prev,
-      attending: prev.attending === t.tr.attendingYes || prev.attending === t.en.attendingYes
-        ? t[lang].attendingYes 
-        : t[lang].attendingNo
+      attending: 
+        prev.attending === t.tr.attendingYes || 
+        prev.attending === t.en.attendingYes || 
+        prev.attending === t.nl.attendingYes
+          ? t[lang].attendingYes 
+          : t[lang].attendingNo
     }));
   }, [lang]);
 
@@ -100,7 +128,15 @@ export default function Home() {
     <>
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
-        .elegant-font { font-family: 'Cormorant Garamond', serif; }
+        .elegant-font { font-family: 'Cormorant Garamond', serif; } 
+        
+        @keyframes pointX {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(5px); }
+        }
+        .animate-point-x {
+          animation: pointX 1.33s infinite ease-in-out; 
+        }
 
         @keyframes roseBloom {
           0% { opacity: 0; transform: scale(0.85) rotate(-2deg); }
@@ -129,46 +165,89 @@ export default function Home() {
         }
       `}} />
 
-      {/* DİL SEÇİCİ - ORTALAMA KUTUSUNDAN TAMAMEN BAĞIMSIZ - KESİN SAĞ ÜST KÖŞE */}
-      <div>
-        <button 
-          onClick={() => setLang('tr')} 
-          className={`text-lg sm:text-2xl transition-all duration-300 ${lang === 'tr' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-200 hover:text-white hover:scale-105'}`}
-        >
-          TR
-        </button>
-        <span className="text-white/30 text-lg sm:text-2xl font-light">|</span>
-        <button 
-          onClick={() => setLang('en')} 
-          className={`text-lg sm:text-2xl transition-all duration-300 ${lang === 'en' ? 'text-[#C5A880] font-bold scale-110 drop-shadow-md' : 'text-slate-200 hover:text-white hover:scale-105'}`}
-        >
-          EN
-        </button>
+      {/* DİL SEÇİCİ - PROFESYONEL VE MODERN TASARIM */}
+      <div className="fixed top-6 right-4 sm:right-8 z-50 flex items-center bg-[#1e293b]/70 backdrop-blur-md rounded-full p-1.5 border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
+        {['tr', 'en', 'nl'].map((l) => (
+          <button
+            key={l}
+            onClick={() => setLang(l as 'tr' | 'en' | 'nl')}
+            className={`relative px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-widest transition-all duration-300 ${
+              lang === l 
+                ? 'text-white drop-shadow-md' 
+                : 'text-slate-400 hover:text-slate-100'
+            }`}
+          >
+            {lang === l && (
+              <span className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] rounded-full -z-10 shadow-inner"></span>
+            )}
+            <span className="relative z-10">{l}</span>
+          </button>
+        ))}
       </div>
 
       <main className="min-h-screen w-full bg-slate-900 flex flex-col items-center justify-center p-2 sm:p-4 py-8 relative">
         
-        {/* ÜST KISIM: ZARİF BİLGİLENDİRME NOTU */}
-        <div className="text-center elegant-font max-w-md px-4 mb-4 mt-16 sm:mt-0">
-          <p className="text-slate-300 text-lg italic tracking-wide">
-            {t[lang].note}
+        {/* ÜST KISIM: KUSURSUZ HİZALANMIŞ İÇ İÇE BUTON ALANI */}
+        <div className="text-center elegant-font max-w-2xl px-4 mb-6 mt-20 sm:mt-4">
+          <p className="text-slate-300 text-lg md:text-xl italic tracking-wide leading-[2.8] inline-block">
+            {t[lang].noteStart}
+            
+            <button 
+              onClick={() => setIsOpen(true)}
+              title={lang === 'tr' ? "LCV Formunu Aç" : "Open RSVP Form"}
+              className="group relative inline-flex items-center justify-center align-middle mx-1.5 px-3 py-1 bg-gradient-to-r from-[#C5A880] to-[#9E7B4F] hover:from-[#B0936C] hover:to-[#89683F] text-white font-bold rounded-lg border border-white/20 shadow-[0_2px_10px_rgba(157,123,79,0.3)] hover:shadow-[0_4px_15px_rgba(157,123,79,0.5)] transition-all duration-300 whitespace-nowrap not-italic text-sm md:text-base cursor-pointer"
+            >
+              {/* Estetik SVG El İkonu */}
+              <span className="inline-flex items-center animate-point-x mr-1.5">
+                <svg viewBox="0 0 24 24" fill="gold" className="w-4 h-4 transform rotate-90 drop-shadow-sm">
+                  <path d="M13 22H9c-1.4 0-2.7-.6-3.6-1.6l-4.4-4.7.9-.9c.3-.3.8-.4 1.2-.2l2.9 1.5V6c0-1.1.9-2 2-2s2 .9 2 2v7.2l1.6-1c.5-.3 1.1-.3 1.6.1l4.8 3.6c.6.4 1 1 1 1.7V20c0 1.1-.9 2-2 2z"/>
+                </svg>
+              </span>
+              <span className="tracking-widest drop-shadow-md">{t[lang].noteButton}</span>
+            </button>
+            
+            {t[lang].noteEnd}
           </p>
         </div>
 
-        {/* 1. KISIM: DAVETİYE GÖRSELİ VE HAYALET BUTON */}
+        {/* 1. KISIM: DAVETİYE GÖRSELİ VE HAYALET BUTON */}{/* 1. KISIM: DAVETİYE GÖRSELİ, HAYALET BUTON VE İŞARET EDEN EL İKONU */}
         <div className="relative w-full max-w-md mx-auto overflow-hidden rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.5)] bg-slate-800">
           
-          {/* SEÇİLEN DİLE GÖRE DEĞİŞEN GÖRSEL (Dinamik src) */}
           <img
             key={lang} 
-            src={lang === 'tr' ? "/davetiye-arkaplan.png" : "/davetiye-arkaplan-en.png"}
+            src={lang === 'tr' ? "/davetiye-arkaplan.png" : (lang === 'nl' ? "/davetiye-arkaplan-nl.png" : "/davetiye-arkaplan-en.png")}
             alt={lang === 'tr' ? "Davetiye" : "Invitation"}
             className="w-full h-auto block animate-in fade-in duration-700"
           />
 
+          {/* DAVETİYE ÜZERİNDEKİ İKON: Butonun tam soluna, yüzdelik oranlarla hizalandı */}
+          <div 
+            className="absolute z-40 flex items-center justify-end pr-1 pointer-events-none"
+            style={{
+              left: '0%', 
+              top: '39.1%', // Butonla aynı yükseklikte başlar
+              width: '11.5%', // Butonun başladığı yere kadar olan mesafeyi kaplar
+              height: '5.7%'  // Butonla aynı boyda olup dikeyde tam ortalar
+            }}
+          >
+            <span className="animate-point-x text-[#C5A780] drop-shadow-[0_2px_5px_rgba(0,0,0,0.7)] flex-shrink-0">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24" 
+                fill="currentColor" 
+                className="transform rotate-90"
+              >
+                <path d="M13 22H9c-1.4 0-2.7-.6-3.6-1.6l-4.4-4.7.9-.9c.3-.3.8-.4 1.2-.2l2.9 1.5V6c0-1.1.9-2 2-2s2 .9 2 2v7.2l1.6-1c.5-.3 1.1-.3 1.6.1l4.8 3.6c.6.4 1 1 1 1.7V20c0 1.1-.9 2-2 2z"/>
+              </svg>
+            </span>
+          </div>
+
+          {/* TIKLANABİLİR GÖRÜNMEZ HAYALET BUTON (TAM OVAL - rounded-full) */}
           <button
             onClick={() => setIsOpen(true)}
-            className="animate-soft-glow rounded-lg transition-all"
+            className="animate-soft-glow rounded-full transition-all"
             style={{
               position: 'absolute',
               left: '11.5%',
@@ -184,12 +263,13 @@ export default function Home() {
             aria-label={lang === 'tr' ? "LCV Formunu Aç" : "Open RSVP Form"}
           />
         </div>
+        
 
         {/* 2. KISIM: RESMİN ALTINDAKİ YALIN YAZI */}
-        <div className="mt-6 text-center elegant-font max-w-md px-4">
+        <div className="mt-8 text-center elegant-font max-w-md px-4">
           <p 
             onClick={() => setIsContactOpen(true)}
-            className="text-slate-300 hover:text-white text-lg tracking-wide cursor-pointer underline underline-offset-4 decoration-[#C5A880]/60 hover:decoration-white transition-all italic"
+            className="text-slate-300 hover:text-white text-lg md:text-xl tracking-wide cursor-pointer underline underline-offset-4 decoration-[#C5A880]/60 hover:decoration-white transition-all italic"
           >
             {t[lang].contactLink}
           </p>
@@ -264,7 +344,7 @@ export default function Home() {
                         >
                           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
                             <option key={num} value={num}>
-                              {num} {lang === 'tr' ? 'Kişi' : (num === 1 ? 'Guest' : 'Guests')}
+                              {num} {lang === 'tr' ? 'Kişi' : (lang === 'nl' ? 'Personen' : (num === 1 ? 'Guest' : 'Guests'))}
                             </option>
                           ))}
                         </select>
